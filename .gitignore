@@ -1,0 +1,8 @@
+# List of untracked files to ignore
+
+__pycache__/
+
+*.png
+
+.ipynb_checkpoints
+
