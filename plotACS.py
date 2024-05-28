@@ -1,10 +1,28 @@
+#    Function to plot attainable control sets
+#
+#    Copyright (C) 2024  Uwe Klingauf, Tilman Strampe
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
 import numpy as np
 import pypoman as pm
 import matplotlib.pyplot as plt
 
 
-def plotACS(B_nom, ineq, ineq_fault, ineq_f_pseudo, mass, radius):
-    
+def plotACS(B_nom, ineq, ineq_fault, ineq_f_pseudo, mass, radius, plot_pseudo):
+
     # calculate and plot ACS
 
     x = []
@@ -97,27 +115,39 @@ def plotACS(B_nom, ineq, ineq_fault, ineq_f_pseudo, mass, radius):
     colors=['#8DB6CD', '#B80F0A', '#EEE8AA']   
 
     ax[0,0].grid()
-    ax[0,0].fill(x[0], y[0], colors[0], x_fault[0], y_fault[0], colors[1], x_pseudo[0], y_pseudo[0], colors[2])
-    ax[0,0].set_xlabel("yaw torque [Nm]")
-    ax[0,0].set_ylabel("thrust [kgf]")
+    if(plot_pseudo):
+        ax[0,0].fill(x[0], y[0], colors[0], x_fault[0], y_fault[0], colors[1], x_pseudo[0], y_pseudo[0], colors[2])
+    else:
+        ax[0,0].fill(x[0], y[0], colors[0], x_fault[0], y_fault[0], colors[1])
+    ax[0,0].set_xlabel("yaw torque (Nm)")
+    ax[0,0].set_ylabel("thrust (kgf)")
     ax[0,0].set_title("L=0, M=0")
 
     ax[0,1].grid()
-    ax[0,1].fill(x[1], y[1], colors[0], x_fault[1], y_fault[1], colors[1], x_pseudo[1], y_pseudo[1], colors[2])
-    ax[0,1].set_xlabel("pitch torque [Nm]")
-    ax[0,1].set_ylabel("thrust [kgf]")
+    if(plot_pseudo):
+        ax[0,1].fill(x[1], y[1], colors[0], x_fault[1], y_fault[1], colors[1], x_pseudo[1], y_pseudo[1], colors[2])
+    else:
+        ax[0,1].fill(x[1], y[1], colors[0], x_fault[1], y_fault[1], colors[1])
+    ax[0,1].set_xlabel("pitch torque (Nm)")
+    ax[0,1].set_ylabel("thrust (kgf)")
     ax[0,1].set_title("L=0, N=0")
 
     ax[1,0].grid()
-    ax[1,0].fill(x[2], y[2], colors[0], x_fault[2], y_fault[2], colors[1], x_pseudo[2], y_pseudo[2], colors[2])
-    ax[1,0].set_xlabel("roll torque [Nm]")
-    ax[1,0].set_ylabel("thrust [kgf]")
+    if(plot_pseudo):
+        ax[1,0].fill(x[2], y[2], colors[0], x_fault[2], y_fault[2], colors[1], x_pseudo[2], y_pseudo[2], colors[2])
+    else:
+        ax[1,0].fill(x[2], y[2], colors[0], x_fault[2], y_fault[2], colors[1])
+    ax[1,0].set_xlabel("roll torque (Nm)")
+    ax[1,0].set_ylabel("thrust (kgf)")
     ax[1,0].set_title("M=0, N=0")
 
     ax[1,1].grid()
-    ax[1,1].fill(x[3], y[3], colors[0], x_fault[3], y_fault[3], colors[1], x_pseudo[3], y_pseudo[3], colors[2])
-    ax[1,1].set_xlabel("roll torque [Nm]")
-    ax[1,1].set_ylabel("pitch torque [Nm]")
+    if(plot_pseudo):
+        ax[1,1].fill(x[3], y[3], colors[0], x_fault[3], y_fault[3], colors[1], x_pseudo[3], y_pseudo[3], colors[2])
+    else:
+        ax[1,1].fill(x[3], y[3], colors[0], x_fault[3], y_fault[3], colors[1])
+    ax[1,1].set_xlabel("roll torque (Nm)")
+    ax[1,1].set_ylabel("pitch torque (Nm)")
     ax[1,1].set_title("N=0, T=mg")
 
     cc = plt.Circle((0, 0), radius, color='k', linewidth=0.5, fill=False)
